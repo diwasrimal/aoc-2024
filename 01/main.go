@@ -34,16 +34,8 @@ func main() {
 	for sc.Scan() {
 		line := sc.Text()
 		first, second, _ := strings.Cut(line, "   ")
-		val1, err := strconv.Atoi(first)
-		if err != nil {
-			fmt.Println("strconv.Atoi() errord")
-			os.Exit(1)
-		}
-		val2, err := strconv.Atoi(second)
-		if err != nil {
-			fmt.Println("strconv.Atoi() errord")
-			os.Exit(1)
-		}
+		val1, _ := strconv.Atoi(first)
+		val2, _ := strconv.Atoi(second)
 		list1 = append(list1, val1)
 		list2 = append(list2, val2)
 		list2freq[val2]++
