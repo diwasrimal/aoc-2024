@@ -2,32 +2,19 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
-	"os"
 	"slices"
 	"strconv"
 	"strings"
+
+	"github.com/diwasrimal/aoc-2024/utils"
 )
 
 var list1, list2 []int
 var list2freq = make(map[int]int)
 
 func main() {
-	part := flag.Int("part", 0, "part of the problem (1 or 2)")
-	input := flag.String("input", "", "input file")
-	flag.Parse()
-
-	if (*part != 1 && *part != 2) || *input == "" {
-		flag.Usage()
-		os.Exit(1)
-	}
-
-	file, err := os.Open(*input)
-	if err != nil {
-		fmt.Printf("Error opening %s: %s\n", *input, err)
-		os.Exit(1)
-	}
+	part, file := utils.MustInitOptions()
 	defer file.Close()
 
 	sc := bufio.NewScanner(file)
@@ -41,7 +28,7 @@ func main() {
 		list2freq[val2]++
 	}
 
-	if *part == 1 {
+	if part == 1 {
 		part1()
 	} else {
 		part2()
