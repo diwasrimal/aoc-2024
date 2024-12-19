@@ -29,7 +29,15 @@ func main() {
 		afters[a] = append(afters[a], b)
 	}
 
-	orderings := strings.Split(strings.TrimSpace(ordering), "\n")
+	var orderings [][]int
+	for _, line := range strings.Split(strings.TrimSpace(ordering), "\n") {
+		parts := strings.Split(line, ",")
+		nums := make([]int, len(parts))
+		for i, s := range parts {
+			nums[i] = utils.Must(strconv.Atoi(s))
+		}
+		orderings = append(orderings, nums)
+	}
 
 	if part == 1 {
 		part1(orderings)
@@ -38,16 +46,10 @@ func main() {
 	}
 }
 
-func part1(orderings []string) {
+func part1(orderings [][]int) {
 	sum := 0
 
-	for _, line := range orderings {
-		parts := strings.Split(line, ",")
-		fmt.Println(parts)
-		nums := make([]int, len(parts))
-		for i, s := range parts {
-			nums[i] = utils.Must(strconv.Atoi(s))
-		}
+	for _, nums := range orderings {
 		i1, i2 := orderingMistakes(nums)
 		if i1 == -1 && i2 == -1 {
 			sum += nums[len(nums)/2]
@@ -56,16 +58,10 @@ func part1(orderings []string) {
 	fmt.Println("part1", sum)
 }
 
-func part2(orderings []string) {
+func part2(orderings [][]int) {
 	sum := 0
 
-	for _, line := range orderings {
-		parts := strings.Split(line, ",")
-		fmt.Println(parts)
-		nums := make([]int, len(parts))
-		for i, s := range parts {
-			nums[i] = utils.Must(strconv.Atoi(s))
-		}
+	for _, nums := range orderings {
 		i1, i2 := orderingMistakes(nums)
 		if !(i1 == -1 && i2 == -1) {
 			// Keep swapping util ordering becomes right
